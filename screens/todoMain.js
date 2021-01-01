@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer,useFocusEffect  } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { AuthContext } from '../App';
@@ -19,16 +19,17 @@ import Status from './Main/Status'
 import Priority from './Main/Priority'
 import Home from './Main/Home'
 import List from '../components/Slibar'
+import URL from '../index'
 const todoMain = ({ navigation,name }) => {
   const { authContext, user } = React.useContext(AuthContext);
   const [info, setInfo] = React.useState('');
   const getInfo = async () => {
     const res = await axios.get(
-      `https://caso-full-test.herokuapp.com/mobile/get/${user}`,
+      `${URL}/mobile/get/${user}`,
     );
     setInfo(res.data.name);
   };
-  useEffect(() => {
+  useFocusEffect(() => {
     if (user) {
       getInfo();
     }

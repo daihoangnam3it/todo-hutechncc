@@ -14,7 +14,7 @@ import {
   TouchableHighlight,
   TextInput,Dimensions
 } from 'react-native';
-
+import URL from '../index'
 const CateItem = ({item,navigation,handleDelete}) => {
   // console.log('item',item);
   const [modalVisible, setModalVisible] = useState(false);
@@ -23,7 +23,7 @@ const CateItem = ({item,navigation,handleDelete}) => {
     const newCate={
       name:name
     }
-    await axios.post(`https://caso-full-test.herokuapp.com/mobile-cate/edit/${item._id}`,newCate)
+    await axios.post(`${URL}/mobile-cate/edit/${item._id}`,newCate)
     Alert.alert('Ok')
     setModalVisible(!modalVisible);
   }
@@ -32,7 +32,7 @@ const CateItem = ({item,navigation,handleDelete}) => {
   return (
     <View>
     <TouchableOpacity onPress={()=>setModalVisible(true)}>
-      <Text>{item._id}</Text>
+      {/* <Text>{item._id}</Text> */}
       <Text>{name}</Text>
       <Text>{item.createAt}</Text>
     </TouchableOpacity>

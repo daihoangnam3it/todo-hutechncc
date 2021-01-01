@@ -14,14 +14,13 @@ import {
 import axios from 'axios';
 import cover from '../assets/cover.jpg';
 import Loading from '../components/Loading'
-import { set } from 'react-native-reanimated';
+import URL from '../index'
 const Register = ({ navigation }) => {
   const [name, setName] = useState('');
   const [pass, setPass] = useState('');
   const [passt, setPasst] = useState('');
   const [mess, setMess] = useState('');
   const [loading,setLoading]=useState(false)
-  console.log(loading);
   const validate = (text) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(text) === false) {
@@ -48,7 +47,7 @@ const Register = ({ navigation }) => {
         setPasst('');
         setMess('');
         await axios.post(
-          'https://caso-full-test.herokuapp.com/mobile/create',
+          `${URL}/mobile/create`,
           user,
         );
         Alert.alert('Thành công')

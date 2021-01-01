@@ -7,11 +7,9 @@ import AuthStack from './AuthStackNavigator'
 
 const Home = ({navigation}) => {
   const [login,setLogin]=useState(AsyncStorage.getItem('@Login'))
-  console.log('welcome',login);
   useEffect(()=>{
     const getLogin = async ()=>{
       await AsyncStorage.getItem('@Login',(err,res)=>{
-        console.log('xxx',res)
         setLogin(res)
       })
       

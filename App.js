@@ -12,6 +12,7 @@ import HomeRegister from './screens/Register';
 import Home from './screens/Home';
 import AuthNavigator from './screens/AuthStackNavigator';
 import MainNavigator from './screens/MainStackNavigator';
+import URL from './index'
 import axios from 'axios'
 export const AuthContext = React.createContext();
 const Root = createStackNavigator();
@@ -64,7 +65,7 @@ export default function App() {
       signIn: async (name, password) => {
         try{
           const res = await axios.post(
-            'https://caso-full-test.herokuapp.com/mobile/login',
+            `${URL}/mobile/login`,
             {
               name: name,
               password: password,
@@ -88,7 +89,6 @@ export default function App() {
     }),
     [],
   );
-  console.log(state.userToken);
   return (
     <AuthContext.Provider value={{authContext,user:state.userToken,mess:mess}}>
       <NavigationContainer>

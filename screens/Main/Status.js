@@ -11,23 +11,22 @@ import {
   Alert,Modal,TouchableHighlight,TextInput
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer,useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { AuthContext } from '../../App';
 import { FontAwesome } from '@expo/vector-icons';
 import Item from '../../components/ItemStatus'
 import axios from 'axios';
-
+import URL from '../../index'
 const Status = ({navigation}) => {
   const{user}=useContext(AuthContext)
   const [name,setName]=useState('')
   const [modalVisible, setModalVisible] = useState(false);
 
-  console.log('x',user);
   const [cate,setCate]=useState([])
   const getCate=async ()=>{
-    const cate=await axios.get(`https://caso-full-test.herokuapp.com/mobile-stt/get/${user}`);
+    const cate=await axios.get(`${URL}/mobile-stt/get/${user}`);
     setCate(cate.data)
   }
   const createCate=async()=>{
@@ -36,23 +35,22 @@ const Status = ({navigation}) => {
       name:name,
       idUser:user,
     }
-    const res=await axios.post('https://caso-full-test.herokuapp.com/mobile-stt/create',newCate);
+    const res=await axios.post(`${URL}/mobile-stt/create`,newCate);
     Alert.alert('Ok')
-    console.log('moi',res);
     const newCateList=[...cate,res.data];
     setCate(newCateList)
     setModalVisible(!modalVisible);
     setName('')
     
   }
-  useEffect(()=>{
+  useFocusEffect(()=>{
     getCate();
   },[navigation])
   const handleDelete=async(id)=>{
     let newCate=cate.map(el=>el);
     newCate=newCate.filter(el=>el._id!==id)
     setCate(newCate)
-    await axios.get(`https://caso-full-test.herokuapp.com/mobile-stt/delete/${id}`)
+    await axios.get(`${URL}/mobile-stt/delete/${id}`)
     Alert.alert('DDa xoa')
 
 

@@ -3,13 +3,14 @@ import { StyleSheet, Text, View,ScrollView,Image } from 'react-native'
 import {DrawerItemList,DrawerItem,DrawerContentScrollView} from '@react-navigation/drawer'
 import { AuthContext } from '../App';
 import axios from 'axios'
+import URL from '../index'
 const Slibar = (props) => {
   const {navigation} = props;
   const { authContext,user} = React.useContext(AuthContext);
   const [info, setInfo] = React.useState({});
   const getInfo = async () => {
     const res = await axios.get(
-      `https://caso-full-test.herokuapp.com/mobile/get/${user}`,
+      `${URL}/mobile/get/${user}`,
     );
     setInfo(res.data);
   };
