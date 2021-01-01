@@ -12,7 +12,6 @@ import HomeRegister from './screens/Register';
 import Home from './screens/Home';
 import AuthNavigator from './screens/AuthStackNavigator';
 import MainNavigator from './screens/MainStackNavigator';
-import { DataProvider } from './contexts/AuthContext';
 import axios from 'axios'
 export const AuthContext = React.createContext();
 const Root = createStackNavigator();
