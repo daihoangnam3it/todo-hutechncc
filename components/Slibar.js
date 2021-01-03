@@ -12,7 +12,6 @@ import URL from '../index'
 const Slibar = (props) => {
   const {navigation} = props;
   const { authContext,user} = React.useContext(AuthContext);
-  console.log(user);
   const [info, setInfo] = React.useState({});
   const getInfo = async () => {
     const res = await axios.get(
@@ -25,7 +24,6 @@ const Slibar = (props) => {
       getInfo();
     }
   }, []);
-  console.log(info);
   return (
         
         
@@ -82,6 +80,13 @@ const Slibar = (props) => {
       )}
         label="Change Info"
         onPress={() => navigation.navigate('Info')}
+      />
+      <DrawerItem
+      icon={(color,size)=>(
+        <FontAwesome5 name="info" size={15} color="black" />
+      )}
+        label="Change Pass"
+        onPress={() => navigation.navigate('Pass')}
       />
       <DrawerItem
        icon={(color,size)=>(

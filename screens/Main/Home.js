@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View,Dimensions,TouchableOpacity} from 'react-native'
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 
 import {
   LineChart,
@@ -8,19 +9,47 @@ import {
   ProgressChart,
   ContributionGraph
 } from 'expo-chart-kit'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { AuthContext } from '../..//App';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
+import URL from '../../index'
+
 const Home = ({navigation}) => {
+  const { authContext, user } = React.useContext(AuthContext);
+  const [notes, setNotes] =React.useState([]);
+  const [done,setDone]=React.useState([]);
+  const [processing,setProcessing]=React.useState([]);
+  const [pending,setPending]=React.useState([]);
+  const getData = async () => {
+    const res = await axios.get(`${URL}/mobile-note/get/${user}`);
+    setNotes(res.data)
+    let newDone=[];
+    let newProcessing=[];
+    let newPending=[];
+    for(let i=0;i<res.data.length;i++){
+      if(res.data[i].status==="Đang làm"){
+        newProcessing=[...processing,res.data[i]._id]
+      }else if(res.data[i].status==="Xong rồi"){
+        newDone=[...done,res.data[i]._id];
+      }else{
+        newPending=[...pending,res.data[i]._id]
+      }
+    }
+    setDone(newDone);
+    setProcessing(newProcessing);
+    setPending(newPending)
+
+  }
+  useFocusEffect(
+    React.useCallback(() => {
+      getData();
+    }, []));
+
   const screenWidth = Dimensions.get('window').width
   const data = [
-    { name: 'Seoul', population: 50, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Toronto', population: 50, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Toronto', population: 20, color: '#F1f024', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Xong rồi', population: done.length, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Đang làm', population: processing.length, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Khi khác làm', population: pending.length, color: '#F1f024', legendFontColor: '#7F7F7F', legendFontSize: 15 },
    
   ]
   return (

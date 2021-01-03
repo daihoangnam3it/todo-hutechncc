@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Text, View,ActivityIndicator } from 'react-native'
 
 const Loading = ({loading}) => {
-  console.log(loading);
   if(!loading){
     return <View/>
   }

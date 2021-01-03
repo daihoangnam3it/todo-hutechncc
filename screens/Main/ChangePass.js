@@ -8,28 +8,33 @@ import { NavigationContainer,useFocusEffect  } from '@react-navigation/native';
 const ChangeInfo = () => {
   const { authContext, user } = React.useContext(AuthContext);
   const [info, setInfo] = React.useState({});
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
+  const [passCurrent, setPassCurrent] = React.useState('');
+  const [pass, setPass] = React.useState('');
+  const [passT,setPassT]=React.useState('');
   const [avatar,setAvatar]=React.useState('');
+
   const getInfo = async () => {
     const res = await axios.get(
       `${URL}/mobile/get/${user}`,
     );
-    setInfo(res.data);
-    setFirstName(res.data.firstName)
-    setLastName(res.data.lastName)
+    setInfo(res.data)
     setAvatar(res.data.avatar)
+
   };
   useFocusEffect(
     React.useCallback(() => {
      getInfo();
     }, []));
-  const handleChangeInfo=async ()=>{
+  const handleChangePass=async ()=>{
     const newInfo={
-      firstName:firstName,
-      lastName:lastName
+      password:pass,
     }
-    const res=await axios.post(`${URL}/mobile/edit/${user}`,newInfo);
+    if(passCurrent!==info.password)
+      return Alert.alert('Mật khẩu hiện tại không đúng')
+    if(pass!==passT){
+      return Alert.alert('Mật khẩu nhập lại không trùng')
+    }
+    const res=await axios.post(`${URL}/mobile/change-pass/${user}`,newInfo);
     Alert.alert(res.data.msg)
   }
   return (
@@ -39,21 +44,30 @@ const ChangeInfo = () => {
       <Image    source={{uri:avatar}} style={styles.img} />
       <Text>Thông tin</Text>
       <TextInput
-        value={firstName}
-        onChangeText={(text) => setFirstName(text)}
-        placeholder='Tên đầu'
+        value={passCurrent}
+        secureTextEntry={true}
+        onChangeText={(text) => setPassCurrent(text)}
+        placeholder='Mật khẩu hiện tại'
         style={styles.textInput}
       />
       <TextInput
-        value={lastName}
-        onChangeText={(text) => setLastName(text)}
-        placeholder='Tên sau'
+        value={pass}
+        secureTextEntry={true}
+        onChangeText={(text) => setPass(text)}
+        placeholder='Mật khẩu 1'
+        style={styles.textInput}
+      />
+      <TextInput
+        value={passT}
+        secureTextEntry={true}
+        onChangeText={(text) => setPassT(text)}
+        placeholder='Mật khẩu 2'
         style={styles.textInput}
       />
       <Text
         style={styles.button}
         onPress={async () => {
-          handleChangeInfo()
+          handleChangePass()
         }}
       >
         Cập nhật

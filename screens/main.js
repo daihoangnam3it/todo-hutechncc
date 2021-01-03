@@ -60,7 +60,6 @@ const Main = ({ navigation, name }) => {
   //Xử lý note
   const getData = async () => {
     const res = await axios.get(`${URL}/mobile-note/get/${user}`);
-    console.log(res.data);
     setData(res.data)
   }
   const handleCreate = async () => {
@@ -213,11 +212,14 @@ const Main = ({ navigation, name }) => {
               </Picker>
             </View>
             <View>
-              <View style={styles.date}>
-                <Text style={styles.textdate}>
+            <View style={styles.date}>
+                <View style={styles.textdate}>
+                <Text>
                   {date.getUTCDate()}/{month[date.getUTCMonth()]}/
               {date.getFullYear()}
+
                 </Text>
+                </View>
                 <Text onPress={showDatepicker} style={styles.btn} >...</Text>
               </View>
 
@@ -255,7 +257,7 @@ const styles = StyleSheet.create({
     width: 130,
     height: 25,
     justifyContent: "center",
-    textAlign: "center",
+    alignItems:'center'
   },
   btn: {
     backgroundColor: "#fff",

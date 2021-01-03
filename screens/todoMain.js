@@ -20,7 +20,9 @@ import Priority from './Main/Priority'
 import Home from './Main/Home'
 import List from '../components/Slibar'
 import ChangeInfo from './Main/ChangeInfo'
+import ChangePass from './Main/ChangePass'
 import URL from '../index'
+import { createContext } from 'react';
 const todoMain = ({ navigation,name }) => {
   const { authContext, user } = React.useContext(AuthContext);
   const [info, setInfo] = React.useState('');
@@ -44,6 +46,7 @@ const todoMain = ({ navigation,name }) => {
         <Drawer.Screen name="Priority" component={Priority}/>
         <Drawer.Screen name="Status" component={Status}/>
         <Drawer.Screen name="Info" component={ChangeInfo}/>
+        <Drawer.Screen name="Pass" component={ChangePass}/>
       </Drawer.Navigator>
   );
 };

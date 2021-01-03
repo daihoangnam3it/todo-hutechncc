@@ -10,6 +10,7 @@ import {
   Button,
   Alert,
   RefreshControl,
+  TouchableHighlight
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -19,7 +20,6 @@ const Login = ({navigation}) => {
   const [name, setName] = useState('');
   const [pass, setPass] = useState('');
   const {authContext,mess} = useContext(AuthContext)
-  console.log(mess);
   // const handleLogin = async () => {
   //   const user = {
   //     name: name,
@@ -63,14 +63,17 @@ const Login = ({navigation}) => {
         placeholder='Mật khẩu'
         style={styles.textInput}
       />
-      <Text style={styles.button} onPress={
+      <View style={styles.boxBtn}>
+      <TouchableHighlight style={styles.button} onPress={
         () => 
         authContext.signIn(name,pass)
         }
         >
-        Đăng nhập
-      </Text>
-      <Text style={styles.button} onPress={()=>navigation.navigate('Register')}>Chưa có tài khoản </Text>
+       <Text>Đăng nhập</Text>
+      </TouchableHighlight>
+      <TouchableHighlight style={styles.button} onPress={()=>navigation.navigate('Register')}><Text>Chưa có tài khoản </Text></TouchableHighlight>
+      </View>
+     
     </View>
   );
 };
@@ -78,6 +81,12 @@ const Login = ({navigation}) => {
 export default Login;
 
 const styles = StyleSheet.create({
+  boxBtn:{
+    flexDirection:"row",
+    justifyContent:'space-between',
+    alignItems:'center',
+    width:300
+  },
   container: {
     width: '100%',
     height: '100%',
