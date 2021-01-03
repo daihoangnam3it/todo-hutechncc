@@ -16,7 +16,9 @@ import cover from '../assets/cover.jpg';
 import Loading from '../components/Loading'
 import URL from '../index'
 const Register = ({ navigation }) => {
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [pass, setPass] = useState('');
   const [passt, setPasst] = useState('');
   const [mess, setMess] = useState('');
@@ -31,18 +33,22 @@ const Register = ({ navigation }) => {
   }
   const handleRegister= async () => {
     const user = {
-      name: name,
+      firstName: firstName,
+      lastName:lastName,
+      email:email,
       password: pass,
       pass2: passt,
     };
-    if(validate(name)){
+    if(validate(email)){
       return setMess('Email sai định dạng')
     }
     if (pass !== passt) {
       return setMess('Mật khẩu không trùng');
     } else {
       try{
-        setName('');
+        setEmail('');
+        setFirstName('')
+        setLastName('')
         setPass('');
         setPasst('');
         setMess('');
@@ -50,6 +56,7 @@ const Register = ({ navigation }) => {
           `${URL}/mobile/create`,
           user,
         );
+        // console.log(user);
         Alert.alert('Thành công')
         navigation.navigate('Login');
 
@@ -59,6 +66,7 @@ const Register = ({ navigation }) => {
       }
       
     }
+    // Alert.alert(user.email)
   };
 
   
@@ -69,9 +77,21 @@ const Register = ({ navigation }) => {
       <Image source={cover} style={styles.img} />
       <Text>Đăng ký</Text>
       <TextInput
-        value={name}
-        onChangeText={(text) => setName(text)}
-        placeholder='Tên đăng nhập'
+        value={email}
+        onChangeText={(text) => setEmail(text)}
+        placeholder='Email'
+        style={styles.textInput}
+      />
+      <TextInput
+        value={firstName}
+        onChangeText={(text) => setFirstName(text)}
+        placeholder='Tên đầu'
+        style={styles.textInput}
+      />
+      <TextInput
+        value={lastName}
+        onChangeText={(text) => setLastName(text)}
+        placeholder='Tên sau'
         style={styles.textInput}
       />
       <TextInput
@@ -96,7 +116,6 @@ const Register = ({ navigation }) => {
       >
         Đăng ký
       </Text>
-      <Loading loading={loading}/>
       
     </View>
   );

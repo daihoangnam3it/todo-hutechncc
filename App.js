@@ -5,11 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import HomeLogin from './screens/Login';
-import HomeRegister from './screens/Register';
-import Home from './screens/Home';
 import AuthNavigator from './screens/AuthStackNavigator';
 import MainNavigator from './screens/MainStackNavigator';
 import URL from './index'
@@ -62,12 +57,12 @@ export default function App() {
   }, []);
   const authContext = React.useMemo(
     () => ({
-      signIn: async (name, password) => {
+      signIn: async (email, password) => {
         try{
           const res = await axios.post(
             `${URL}/mobile/login`,
             {
-              name: name,
+              email: email,
               password: password,
             },
           );

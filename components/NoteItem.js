@@ -130,14 +130,14 @@ const NoteItem = ({item,navigation,listCate,listPrio,listStatus,handelDelete}) =
               </Picker>
               <Picker selectedValue={prio} onValueChange={handlePrio.bind()} style={{ height: 50, width: 200 }}>
                 <Picker.Item label={prio} value={prio} />
-                {listPrio.map(el => {
-                  return <Picker.Item label={el.name} value={el.name} />
+                {listPrio.map((el,index) => {
+                  return <Picker.Item label={el.name} value={el.name} key={index}/>
                 })}
               </Picker>
               <Picker selectedValue={status} onValueChange={handleStatus.bind()} style={{ height: 50, width: 200 }}>
                 <Picker.Item label={status} value={status} />
-                {listStatus.map(el => {
-                  return <Picker.Item label={el.name} value={el.name} />
+                {listStatus.map((el,index) => {
+                  return <Picker.Item label={el.name} value={el.name} key={index} />
                 })}
               </Picker>
             </View>
