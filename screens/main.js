@@ -21,18 +21,18 @@ import axios from 'axios';
 import URL from '../index'
 import Item from '../components/NoteItem';
 const Main = ({ navigation, name }) => {
-  //Xác thực
+  //Xác thực tài khoản khi đăng nhập
   const { authContext, user } = React.useContext(AuthContext);
-  //Modal
+  //Khai báo Modal
   const [modalVisible, setModalVisible] = useState(false);
-  //DatePicker
+  //Khai báo DatePicker
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
 
 
-  //Thuộc tính
+  //Khai báo thuộc tính
   const [term, setTerm] = useState('');
   const [statusList, setStatusList] = useState([]);
   const [status, setStatus] = useState('')
@@ -41,17 +41,19 @@ const Main = ({ navigation, name }) => {
   const [prioList, setPrioList] = useState([]);
   const [prio, setPrio] = useState('')
 
-  //DatePicker
+  //Xét tháng trong DatePicker
   const month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
   };
+  // Hiển thị box khi nhấn vào 
   const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
   };
+  // Hiển thị box thời gian khi nhấn vào
   const showDatepicker = () => {
     showMode('date');
   };
@@ -62,7 +64,9 @@ const Main = ({ navigation, name }) => {
     const res = await axios.get(`${URL}/mobile-note/get/${user}`);
     setData(res.data)
   }
+  // Xử lý thêm 1 note
   const handleCreate = async () => {
+    // Khai báo 1 note mớI
     const newNote = {
       name: term,
       idUser: user,
@@ -72,45 +76,63 @@ const Main = ({ navigation, name }) => {
       plandate: date
     }
     // console.log(newNote);
+    // Update note
     const res = await axios.post(`${URL}/mobile-note/create`, newNote)
+    // Cập nhật danh sách note
     let newData = [...data, res.data]
+    // Cập nhật danh sách note hiển thị
     setData(newData)
+    // Tắt box
     setModalVisible(!modalVisible);
     setCate('');
     setTerm('')
+    // Cập nhật ngày đã chọn
     setDate(new Date())
+    // Trả về giá trị trống
     setPrio('')
     setStatus('')
   }
-  //Xử lý xoá
+  //Xử lý xoá note
   const handelDelete=async(id)=>{
+    // Gọ API xoá note
     const res=await axios.get(`${URL}/mobile-note/delete/${id}`);
+    // Cập nhật danh sách note hiện tại
     let newData=data.map(el=>el);
     newData=newData.filter(el=>el._id!==id)
     setData(newData);
+    // Hiển thị thông báo
     Alert.alert(res.data.msg)
   }
 
   //Xử lý status
   const getStatus = async () => {
+    // Gọi API lấy danh sách status
     const cate = await axios.get(`${URL}/mobile-stt/get/${user}`);
+    // Gán danh sách note
     setStatusList(cate.data)
   }
+  // Xử lý chọn status
   const handleStatus = (value) => {
     const newValue = value;
+    // Cập nhật giá trị status
     setStatus(newValue)
   }
   //Xử lý thể loại
   const getCate = async () => {
+    // Gọi API lấy danh sách thể loại
     const cate = await axios.get(`${URL}/mobile-cate/get/${user}`);
+    // Cập nhật danh sách thể loại
     setCateList(cate.data)
   }
+  // Chọn thể loại 
   const handleCate = (value) => {
     const newValue = value;
+    // Cập nhật giá trị thể loại đã chọn
     setCate(newValue)
   }
   //Xử lý prio
   const getPrio = async () => {
+    // Gọi API lấy danh sách Prio
     const cate = await axios.get(`${URL}/mobile-prio/get/${user}`);
     setPrioList(cate.data)
   }
@@ -118,6 +140,7 @@ const Main = ({ navigation, name }) => {
     const newValue = value;
     setPrio(newValue)
   }
+  // Chạy các chức năng khi vừa vào trang
   useFocusEffect(
     React.useCallback(() => {
       getData();
@@ -135,7 +158,7 @@ const Main = ({ navigation, name }) => {
     >
       <FontAwesome name='bars' size={32} color='black' />
     </TouchableOpacity> */}
-
+      {/* Hiển thị danh sách các note hiện tại */}
       <FlatList
         data={data}
         keyExtractor={(item) => `${item._id}`}
@@ -160,6 +183,7 @@ const Main = ({ navigation, name }) => {
           alignItems: 'center',
         }}
       >
+      {/* Nút thêm */}
         <TouchableOpacity
           style={styles.add}
           onPress={() => setModalVisible(true)}
@@ -167,6 +191,7 @@ const Main = ({ navigation, name }) => {
           <Text>+</Text>
         </TouchableOpacity>
       </View>
+      {/* Box thêm sản phẩm */}
       <Modal
         transparent={true}
         animationType='slide'
@@ -177,6 +202,8 @@ const Main = ({ navigation, name }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+          {/* Nút tắt box */}
+
             <TouchableOpacity
               style={styles.close}
               onPress={() => {
