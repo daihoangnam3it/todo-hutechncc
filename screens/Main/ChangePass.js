@@ -6,29 +6,36 @@ import axios from 'axios';
 import { NavigationContainer,useFocusEffect  } from '@react-navigation/native';
 
 const ChangeInfo = () => {
+  // Lấy ID thông tin tài khoản
   const { authContext, user } = React.useContext(AuthContext);
   const [info, setInfo] = React.useState({});
   const [passCurrent, setPassCurrent] = React.useState('');
   const [pass, setPass] = React.useState('');
   const [passT,setPassT]=React.useState('');
   const [avatar,setAvatar]=React.useState('');
-
+// Gọi API lấy thông tin tài khoản
   const getInfo = async () => {
     const res = await axios.get(
       `${URL}/mobile/get/${user}`,
     );
+    // Gán giá trị thông tin
     setInfo(res.data)
+    // Gán avatar
     setAvatar(res.data.avatar)
 
   };
+  // Khởi chạy lấy thông tin tài khoản khi vào chức năng
   useFocusEffect(
     React.useCallback(() => {
      getInfo();
     }, []));
+    // Hàm xử lý đổi mật khẩu
   const handleChangePass=async ()=>{
+    // gửi thông tin tài khoản
     const newInfo={
       password:pass,
     }
+    // Check mật khẩu hiện tại
     if(passCurrent!==info.password)
       return Alert.alert('Mật khẩu hiện tại không đúng')
     if(pass!==passT){
