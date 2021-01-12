@@ -215,7 +215,7 @@ const Main = ({ navigation, name }) => {
             <View style={styles.date}>
                 <View style={styles.textdate}>
                 <Text>
-                  {date.getUTCDate()}/{month[date.getUTCMonth()]}/
+                {date.getDate()}/{month[date.getMonth()]}/
               {date.getFullYear()}
 
                 </Text>

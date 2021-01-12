@@ -38,7 +38,10 @@ const todoMain = ({ navigation,name }) => {
     }
   }, [user]);
   const Drawer = createDrawerNavigator();
+  //Khai báo các màn hình - tổng hợp các chức năng
   return (
+    //headerShown:true -- Hiển thị thanh tiêu đề
+    //drawerContent={props=><List {...props} ghi vào danh sách menu ở file components/slibar.js
     <Drawer.Navigator screenOptions={{ headerShown: true }} drawerContent={props=><List {...props}/>}  >
         <Drawer.Screen name="Home" component={Home}/>
         <Drawer.Screen name="Note" component={TodoMain}/>

@@ -13,12 +13,14 @@ const Slibar = (props) => {
   const {navigation} = props;
   const { authContext,user} = React.useContext(AuthContext);
   const [info, setInfo] = React.useState({});
+  //Lấy thông tin của người dùng
   const getInfo = async () => {
     const res = await axios.get(
       `${URL}/mobile/get/${user}`,
     );
     setInfo(res.data);
   };
+  //Khởi chạy việc lấy thông tin khi mới đăng nhập
   useEffect(() => {
     if (user) {
       getInfo();
@@ -26,42 +28,55 @@ const Slibar = (props) => {
   }, []);
   return (
         
-        
+      
    <ScrollView style={{height:"100%"}} >
+   {/* Header -- hiển thị thông tin avatar và tên */}
    <View styles={styles.view}>
+   {/* Hình ảnh */}
    <Image
      source={{uri:info.avatar}}
      style={styles.img}
    />
+   {/* Tên */}
       <Text style={styles.view} >{info.lastName} {info.firstName}</Text>
 
    </View>
+   {/* Hiển thị danh sách đã truyền vào ở trong file todoMain.js */}
     <View style={styles.body}>
+    {/* Chi tiết từng chức năng */}
     <DrawerItem
         icon={(color,size)=>(
+          // icon 
           <FontAwesome5 name="home" size={15} color="black" />
       )}
+      // Tên chức năng home
         label="Home"
         onPress={() => navigation.navigate('Home')}
       />
     <DrawerItem
+    // icon
         icon={(color,size)=>(
           <FontAwesome5 name="clipboard-list" size={15} color="black" />
       )}
+      // Tên các chức năng note
         label="Note"
         onPress={() => navigation.navigate('Note')}
       />
     <DrawerItem
+    // Icon
         icon={(color,size)=>(
           <FontAwesome5 name="images" size={15} color="black" />
       )}
+      // Tên chức năng category
         label="Category"
         onPress={() => navigation.navigate('Category')}
       />
     <DrawerItem
+    // icon
         icon={(color,size)=>(
           <FontAwesome5 name="play-circle" size={15} color="black" />
       )}
+      // Tên các chức năng Priority
         label="Priority"
         onPress={() => navigation.navigate('Priority')}
       />
@@ -69,6 +84,7 @@ const Slibar = (props) => {
         icon={(color,size)=>(
           <FontAwesome5 name="carrot" size={15} color="black" />
       )}
+      // Tên chức năng status
         label="Status"
         onPress={() => navigation.navigate('Status')}
       />
@@ -78,6 +94,7 @@ const Slibar = (props) => {
       icon={(color,size)=>(
         <FontAwesome5 name="info" size={15} color="black" />
       )}
+      // Tên chức năng đổi thông tin
         label="Change Info"
         onPress={() => navigation.navigate('Info')}
       />
@@ -109,13 +126,16 @@ const styles = StyleSheet.create({
   view:{
     height:50,
     fontSize:15,
-    flex:1
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    padding:2
     
   },
   img:{
-    width:100,
+    width:200,
     height:50,
-    borderRadius:50
+    borderRadius:5,
   },
   body:{
     paddingTop:2,

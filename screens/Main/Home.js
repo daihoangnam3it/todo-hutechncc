@@ -47,9 +47,9 @@ const Home = ({navigation}) => {
 
   const screenWidth = Dimensions.get('window').width
   const data = [
-    { name: 'Xong rồi', population: done.length, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Đang làm', population: processing.length, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Khi khác làm', population: pending.length, color: '#F1f024', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: done.length?'Xong rồi':'Chưa có', population: done.length?done.length:0, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: processing.length?'Đang làm':'Chưa có', population: processing.length?processing.length:0, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: pending.length?'Khi khác làm':'Chưa có', population: pending.length?pending.length:0, color: '#F1f024', legendFontColor: '#7F7F7F', legendFontSize: 15 },
    
   ]
   return (
