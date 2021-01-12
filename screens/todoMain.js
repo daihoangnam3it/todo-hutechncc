@@ -26,17 +26,20 @@ import { createContext } from 'react';
 const todoMain = ({ navigation,name }) => {
   const { authContext, user } = React.useContext(AuthContext);
   const [info, setInfo] = React.useState('');
+  // Lấy thông tin cá nhân
   const getInfo = async () => {
     const res = await axios.get(
       `${URL}/mobile/get/${user}`,
     );
     setInfo(res.data.name);
   };
+  // Chạy khi mới vào
   useFocusEffect(() => {
     if (user) {
       getInfo();
     }
   }, [user]);
+  // Tạo chức năng hiển thị thanh menu
   const Drawer = createDrawerNavigator();
   //Khai báo các màn hình - tổng hợp các chức năng
   return (
