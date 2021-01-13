@@ -8,6 +8,7 @@ import { NavigationContainer,useFocusEffect  } from '@react-navigation/native';
 const ChangeInfo = () => {
   // Lấy ID thông tin tài khoản
   const { authContext, user } = React.useContext(AuthContext);
+  // Khai báo các state thông tin
   const [info, setInfo] = React.useState({});
   const [passCurrent, setPassCurrent] = React.useState('');
   const [pass, setPass] = React.useState('');
@@ -71,6 +72,7 @@ const ChangeInfo = () => {
         placeholder='Mật khẩu 2'
         style={styles.textInput}
       />
+      {/* Nút bấm */}
       <Text
         style={styles.button}
         onPress={async () => {
