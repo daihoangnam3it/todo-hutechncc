@@ -35,7 +35,7 @@ const ChangeInfo = () => {
     }, []));
     // Hàm xử lý đổi thông tin
   const handleChangeInfo=async ()=>{
-    // Tạo thông tin mới
+    // Tạo thông tin mớ
     const newInfo={
       firstName:firstName,
       lastName:lastName
