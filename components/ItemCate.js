@@ -18,13 +18,20 @@ import URL from '../index'
 const CateItem = ({item,navigation,handleDelete}) => {
   // console.log('item',item);
   const [modalVisible, setModalVisible] = useState(false);
+  // Khai báo state name là tên thể loại đã truyền vào
   const [name,setName]=useState(item.name)
+
+  // Hàm cập nhật thể loại
   const handleEdit=async()=>{
+    // Khai báo thông tin thể loại mới
     const newCate={
       name:name
     }
+    // Gọi APi cập nhật thể loại
     await axios.post(`${URL}/mobile-cate/edit/${item._id}`,newCate)
+    // Thông báo thành công
     Alert.alert('Ok')
+    // Tắt box nhập thông tin
     setModalVisible(!modalVisible);
   }
 
@@ -61,12 +68,14 @@ const CateItem = ({item,navigation,handleDelete}) => {
               onChangeText={text=>setName(text)}
             />
             <View style={styles.btnBox}>
+            {/* Cập nhật thông tin sự kiện onPress */}
             <TouchableHighlight
               style={styles.openButton}
               onPress={() => handleEdit()}
             >
               <Text>Sửa</Text>
             </TouchableHighlight>
+            {/* Xoá thể loại theo id */}
             <TouchableHighlight
               style={styles.openButton}
               onPress={() => handleDelete(item._id)}
