@@ -70,7 +70,7 @@ const Main = ({ navigation, name }) => {
     const newNote = {
       name: term,
       idUser: user,
-      status: status,
+      status: "Chưa làm",
       category: cate,
       priority: prio,
       plandate: date
@@ -231,12 +231,12 @@ const Main = ({ navigation, name }) => {
                   return <Picker.Item label={el.name} value={el.name} />
                 })}
               </Picker>
-              <Picker selectedValue={status} onValueChange={handleStatus.bind()} style={{ height: 50, width: 200 }}>
+              {/* <Picker selectedValue={status} onValueChange={handleStatus.bind()} style={{ height: 50, width: 200 }}>
                 <Picker.Item label="Chọn trạng thái" value="0" />
                 {statusList.map(el => {
                   return <Picker.Item label={el.name} value={el.name} />
                 })}
-              </Picker>
+              </Picker> */}
             </View>
             <View>
             <View style={styles.date}>

@@ -23,18 +23,13 @@ const Home = ({navigation}) => {
   const getData = async () => {
     const res = await axios.get(`${URL}/mobile-note/get/${user}`);
     setNotes(res.data)
-    let newDone=[];
-    let newProcessing=[];
-    let newPending=[];
-    for(let i=0;i<res.data.length;i++){
-      if(res.data[i].status==="Đang làm"){
-        newProcessing=[...processing,res.data[i]._id]
-      }else if(res.data[i].status==="Xong rồi"){
-        newDone=[...done,res.data[i]._id];
-      }else{
-        newPending=[...pending,res.data[i]._id]
-      }
-    }
+    console.log(res.data);
+    let newDone=res.data.filter(el=>el.status==="Đang làm");
+    console.log(newDone.length);
+    let newProcessing=res.data.filter(el=>el.status==="Xong rồi");
+    console.log(newProcessing.length);
+    let newPending=res.data.filter(el=>el.status=="Chưa làm");
+   
     setDone(newDone);
     setProcessing(newProcessing);
     setPending(newPending)
@@ -47,9 +42,9 @@ const Home = ({navigation}) => {
 
   const screenWidth = Dimensions.get('window').width
   const data = [
-    { name: done.length?'Xong rồi':'Chưa có', population: done.length?done.length:0, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: processing.length?'Đang làm':'Chưa có', population: processing.length?processing.length:0, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: pending.length?'Khi khác làm':'Chưa có', population: pending.length?pending.length:0, color: '#F1f024', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: done.length?'Xong rồi':'Chưa có', population: done.length, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 10 },
+    { name: processing.length?'Đang làm':'Chưa có', population: processing.length, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 10},
+    { name: pending.length?'Khi khác làm':'Chưa có', population: pending.length, color: '#F1f024', legendFontColor: '#7F7F7F', legendFontSize: 10 },
    
   ]
   return (
