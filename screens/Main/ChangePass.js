@@ -10,9 +10,13 @@ const ChangeInfo = () => {
   const { authContext, user } = React.useContext(AuthContext);
   // Khai báo các state thông tin
   const [info, setInfo] = React.useState({});
+  // Khai báo biến pass hiện tại -- setPassCurrent dùng khi muốn cập nhật passCurrent
   const [passCurrent, setPassCurrent] = React.useState('');
+  // Khai báo biến pass 1 -- setPass dùng khi muốn cập nhật pass
   const [pass, setPass] = React.useState('');
+  // Khai báo biến pass 2 setPassT dùng khi muốn cập nhật passT
   const [passT,setPassT]=React.useState('');
+  // Khai báo biến avatar -- setAvatar dùng khi cập nhật biến avatar
   const [avatar,setAvatar]=React.useState('');
 // Gọi API lấy thông tin tài khoản
   const getInfo = async () => {
@@ -51,23 +55,29 @@ const ChangeInfo = () => {
       {/* <StatusBar hidden /> */}
       <Image    source={{uri:avatar}} style={styles.img} />
       <Text>Thông tin</Text>
+      {/* Chỗ để nhập pass hiện tại*/}
       <TextInput
         value={passCurrent}
         secureTextEntry={true}
+        // Cập nhật biến pass hiện tại
         onChangeText={(text) => setPassCurrent(text)}
         placeholder='Mật khẩu hiện tại'
         style={styles.textInput}
       />
+      {/* Chỗ để nhập pass lần 1 */}
       <TextInput
         value={pass}
         secureTextEntry={true}
+        // Cập nhật biến pass 1
         onChangeText={(text) => setPass(text)}
         placeholder='Mật khẩu 1'
         style={styles.textInput}
       />
+      {/* Chỗ để nhập pass lần 2 */}
       <TextInput
         value={passT}
         secureTextEntry={true}
+        // Cập nhật biến pass 2
         onChangeText={(text) => setPassT(text)}
         placeholder='Mật khẩu 2'
         style={styles.textInput}

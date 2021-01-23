@@ -11,12 +11,15 @@ const ChangeInfo = () => {
   const { authContext, user } = React.useContext(AuthContext);
   // Khai báo các state thông tin
   const [info, setInfo] = React.useState({});
+  // Khai báo biến firstName -- setFirstName dùng khi muốn cập nhật firstName
   const [firstName, setFirstName] = React.useState('');
+  // Khai báo biến lastName -- setLastName dùng khi muốn cập nhật lastName
   const [lastName, setLastName] = React.useState('');
+  // Khai báo biến avatar -- setAvatar dùng khi cập nhật biến avatar
   const [avatar,setAvatar]=React.useState('');
-// Gọi API lấy thông tin tài khoản
-
+  // Hàm lấy dữ liệu
   const getInfo = async () => {
+    // Gọi API lấy thông tin tài khoản
     const res = await axios.get(
       `${URL}/mobile/get/${user}`,
     );
@@ -53,12 +56,14 @@ const ChangeInfo = () => {
       <Text>Thông tin</Text>
       <TextInput
         value={firstName}
+         // Cập nhật biến firstName
         onChangeText={(text) => setFirstName(text)}
         placeholder='Tên đầu'
         style={styles.textInput}
       />
       <TextInput
         value={lastName}
+        // Cập nhật biến lastName
         onChangeText={(text) => setLastName(text)}
         placeholder='Tên sau'
         style={styles.textInput}
